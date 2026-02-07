@@ -55,7 +55,7 @@
 
 | Metric | Value |
 |--------|-------|
-| **Final Rank** | **3rd / 1,595 teams** |
+| **Final Rank** | **2nd / 1,595 teams** |
 | **Final Score** | **0.14386** (lower is better) |
 | **Prize** | **Best Excellence Award (최우수상)** |
 | Team | Lucky Pelican (김진욱, 송용호, 이유진, 심재현) |
@@ -443,3 +443,4 @@ python scripts/train_model_b.py
 4. T. Akiba et al. *Optuna: A Next-generation Hyperparameter Optimization Framework.* KDD, 2019.
 5. S. M. Lundberg & S. I. Lee. *A Unified Approach to Interpreting Model Predictions (SHAP).* NeurIPS, 2017.
 6. Dacon. 운수종사자 인지적 특성 데이터를 활용한 교통사고 위험 예측 AI 경진대회. https://dacon.io/competitions/official/236564
+
