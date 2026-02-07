@@ -30,9 +30,23 @@
 
 ## Competition Result
 
-<p align="center">
-  <img src="assets/leaderboard.png" alt="Leaderboard" width="800">
-</p>
+<table>
+<tr>
+<td width="65%" align="center">
+
+<img src="assets/leaderboard.png" alt="Leaderboard" width="100%">
+
+</td>
+<td width="35%" align="center">
+
+<img src="assets/award_certificate.jpg" alt="Award Certificate" width="100%">
+
+**Best Excellence Award (최우수상)**<br>
+한국교통안전공단
+
+</td>
+</tr>
+</table>
 
 <div align="center">
 
@@ -40,7 +54,7 @@
 |--------|-------|
 | **Final Rank** | **2nd / 1,595 teams** |
 | **Final Score** | **0.14386** (lower is better) |
-| **Prize** | **Top 1% (WINNER)** |
+| **Prize** | **Best Excellence Award (최우수상)** |
 | Submissions | 96 |
 
 </div>
