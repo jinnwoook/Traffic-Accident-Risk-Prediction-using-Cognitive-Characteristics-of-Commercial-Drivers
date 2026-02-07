@@ -34,7 +34,7 @@
 
 | Metric | Value |
 |--------|-------|
-| **Final Rank** | **3rd / 1,595 teams** |
+| **Final Rank** | **2nd / 1,595 teams** |
 | **Final Score** | **0.14386** (lower is better) |
 | **Prize** | **Top 1% (WINNER)** |
 | Submissions | 96 |
@@ -267,3 +267,4 @@ python scripts/train_model_b.py
 2. L. Prokhorenkova et al. *CatBoost: unbiased boosting with categorical features.* NeurIPS, 2018.
 3. D. M. Green & J. A. Swets. *Signal Detection Theory and Psychophysics.* Wiley, 1966.
 4. Dacon. 운수종사자 인지적 특성 데이터를 활용한 교통사고 위험 예측 AI 경진대회. https://dacon.io/competitions/official/236564
+
