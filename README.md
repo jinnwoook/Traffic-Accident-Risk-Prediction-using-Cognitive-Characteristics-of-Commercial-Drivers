@@ -1,5 +1,9 @@
 <div align="center">
 
+<img src="assets/cover.png" alt="Cover" width="600">
+
+<br><br>
+
 # Traffic Accident Risk Prediction
 
 ### Using Cognitive Characteristics of Commercial Drivers
