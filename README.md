@@ -31,7 +31,7 @@
 
 ---
 
-## Competition Result
+## 🏆 Competition Result
 
 <table>
 <tr>
@@ -44,8 +44,9 @@
 
 <img src="assets/award_certificate.jpg" alt="Award Certificate" width="100%">
 
-**Best Excellence Award (최우수상)**<br>
-한국교통안전공단
+<h3>🥈 Best Excellence Award</h3>
+<h4>(최우수상)</h4>
+<p>한국교통안전공단</p>
 
 </td>
 </tr>
@@ -53,26 +54,26 @@
 
 <div align="center">
 
-| Metric | Value |
-|--------|-------|
-| **Final Rank** | **2nd / 1,595 teams** |
+| 🏅 Achievement | Details |
+|:--------------:|:--------|
+| **Final Rank** | 🥈 **2nd / 1,595 teams** (Top 0.1%) |
 | **Final Score** | **0.14386** (lower is better) |
-| **Prize** | **Best Excellence Award (최우수상)** |
-| Team | Lucky Pelican (김진욱, 송용호, 이유진, 심재현) |
-| Data Scale | A: 647,241 + B: 297,526 (~100만 건) |
+| **Prize** | 🏆 **Best Excellence Award (최우수상)** |
+| **Team** | Lucky Pelican (김진욱, 송용호, 이유진, 심재현) |
+| **Data Scale** | A: 647,241 + B: 297,526 (~1M records) |
 
 </div>
 
 ---
 
-## Problem Statement
+## 📋 Problem Statement
 
 운전자격정밀검사(사업용 차량 운전자 대상) 데이터를 활용하여 **교통사고 위험군을 이진 분류**(0=정상, 1=위험)하는 문제입니다.
 
 검사는 두 유형으로 구분됩니다:
 
 | | Test A (인지 반응 검사) | Test B (운전적성 종합 검사) |
-|--|--|--|
+|:-:|:--|:--|
 | **구조** | Trial 시퀀스 기반 (시행별 반응속도) | 인지기능 종합 평가 |
 | **하위검사** | A1~A9 (9개) | B1~B10 (10개) |
 | **측정 내용** | 단순반응, 선택반응, 주의력, 간섭(Stroop), 변화탐지 | 시야, 신호등, 화살표(Flanker), 길찾기, 표지판, 추적, 이중/삼중과제 |
@@ -86,7 +87,7 @@ $$\text{Score} = 0.5 \times (1 - \text{AUC}) + 0.25 \times \text{Brier} + 0.25 \
 
 ---
 
-## Key Insight: The Immutable Variable Dilemma
+## 💡 Key Insight: The Immutable Variable Dilemma
 
 > **"자동차 보험료는 나이와 사고 이력에 따라 결정된다. 이 두 변수가 사고를 설명하는 가장 강력한 예측 요인이다."**
 
@@ -96,7 +97,7 @@ $$\text{Score} = 0.5 \times (1 - \text{AUC}) + 0.25 \times \text{Brier} + 0.25 \
 <tr>
 <td width="50%" align="center">
 
-### Mutable Variables (가변)
+### 🔄 Mutable Variables (가변)
 
 단기간에 **변화 가능**하거나<br>
 개인의 인지·주의력 상태를 반영
@@ -107,7 +108,7 @@ $$\text{Score} = 0.5 \times (1 - \text{AUC}) + 0.25 \times \text{Brier} + 0.25 \
 </td>
 <td width="50%" align="center">
 
-### Immutable Variables (불변)
+### 🔒 Immutable Variables (불변)
 
 쉽게 **변하지 않는**<br>
 안정적인 인적 정보
@@ -122,16 +123,15 @@ $$\text{Score} = 0.5 \times (1 - \text{AUC}) + 0.25 \times \text{Brier} + 0.25 \
 
 **Feature Importance 분석 결과:**
 
-| Model | 불변 변수 기여도 | 가변 변수 기여도 |
-|:-----:|:--------------:|:--------------:|
-| **Model A** (XGBoost) | ~70% | ~30% |
-| **Model B** (CatBoost) | ~95% | ~5% |
+<div align="center">
+<img src="assets/feature_importance.png" alt="Feature Importance" width="800">
+</div>
 
 > 불변 변수가 예측의 대부분을 지배합니다. 이는 **"시험 점수를 아무리 개선해도 위험군에서 벗어나기 어려운"** 구조적 문제를 의미합니다.
 
 ---
 
-## Novelty: Mathematical Proof of Structural Limitation
+## 🔬 Novelty: Mathematical Proof of Structural Limitation
 
 > *왜 시험 점수를 극단적으로 개선해도 위험 확률이 충분히 낮아지지 않는가?*
 
@@ -156,13 +156,13 @@ $$|\Delta p|_{\max} \approx 0.065$$
 ### 실증: 고위험군 재시험 시뮬레이션
 
 | | Before | After (가변 변수 최적화) | 변화 |
-|--|:------:|:-----:|:-----:|
+|:-:|:------:|:-----:|:-----:|
 | **위험도** | 0.6758 | 0.6146 | -9.1% |
 | **목표 (저위험)** | - | 0.02 | **도달 불가** |
 
 ---
 
-## Proposed Solutions: Three Principles for Fairness
+## ⚖️ Proposed Solutions: Three Principles for Fairness
 
 본 모델이 실무에 적용되려면 **세 가지 원칙**이 충족되어야 합니다:
 
@@ -188,52 +188,35 @@ $$|\Delta p|_{\max} \approx 0.065$$
 
 ---
 
-## Technical Architecture
+## 🏗️ Technical Architecture
 
 ### Dual-Model Design
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Raw Test Data                         │
-├──────────────────────┬──────────────────────────────────┤
-│                      │                                   │
-│  Test A (시퀀스)      │  Test B (종합평가)                  │
-│  647,241건           │  297,526건                         │
-│                      │                                   │
-│  ┌─────────────┐     │  ┌──────────────────────────┐     │
-│  │ pre_a.py    │     │  │ preprocess_b_pca_pipeline │     │
-│  │ 115 features│     │  │ 222 → 51 PCA + 31 meta   │     │
-│  └──────┬──────┘     │  └───────────┬──────────────┘     │
-│         │            │              │                     │
-│  ┌──────▼──────┐     │  ┌───────────▼──────────────┐     │
-│  │  XGBoost    │     │  │       CatBoost            │     │
-│  │  5-Fold CV  │◄────┼──│  Native Categorical       │     │
-│  └──────┬──────┘     │  └───────────┬──────────────┘     │
-│         │    A↔B 교차 정보 공유       │                     │
-│         │            │              │                     │
-│         └──────┬─────┴──────────────┘                     │
-│                ▼                                          │
-│         Final Prediction                                  │
-└─────────────────────────────────────────────────────────┘
-```
+<div align="center">
+<img src="assets/architecture_diagram.png" alt="Architecture" width="800">
+</div>
 
 ### 11 Models Compared → Best 2 Selected
 
+<div align="center">
+<img src="assets/model_comparison.png" alt="Model Comparison" width="800">
+</div>
+
 | Model | A AUC | B AUC | |
-|-------|:-----:|:-----:|--|
+|:------|:-----:|:-----:|:--|
 | SVM | ~0.55 | ~0.58 | |
 | KNN | ~0.57 | ~0.60 | |
 | Random Forest | ~0.68 | ~0.76 | |
-| **XGBoost** | **0.7213** | 0.7912 | **← A 최고** |
+| **XGBoost** | **0.7213** | 0.7912 | ⭐ **Best for A** |
 | LightGBM | 0.7195 | 0.7920 | |
-| **CatBoost** | 0.7148 | **0.7943** | **← B 최고** |
+| **CatBoost** | 0.7148 | **0.7943** | ⭐ **Best for B** |
 | TabNet | ~0.68 | ~0.75 | |
 | TabPFN | ~0.66 | ~0.72 | |
 | MLP | ~0.67 | ~0.74 | |
 
 ---
 
-## Feature Engineering Novelties
+## 🛠️ Feature Engineering Novelties
 
 ### Novelty 1: Asymmetric Risk Weighting Function
 
@@ -249,16 +232,9 @@ $$|\Delta p|_{\max} \approx 0.065$$
 
 전체 피처를 단일 PCA로 압축하지 않고, **검사 도메인별로 독립적인 PCA**를 적용합니다. 각 검사가 독립적인 인지 기능을 측정하기 때문에, 다른 도메인의 분산이 혼합되면 의미 있는 주성분이 왜곡됩니다.
 
-| PCA Group | Raw Features | Components | Explained |
-|:---------:|:------------:|:----------:|:---------:|
-| B1/B2 시야 | 23 | 3 | 62.8% |
-| B3 신호등 | 18 | 4 | 83.2% |
-| B4 Stroop | 20 | 5 | - |
-| B5 길찾기 | 43 | 7 | 90.9% |
-| B6/B7 표지판 | 6 | 1 | 64.2% |
-| B8 추적 | 37 | 8 | 99.3% |
-| B9/B10 복합과제 | 75 | 23 | - |
-| **Total** | **222** | **51** | **77% 압축** |
+<div align="center">
+<img src="assets/pca_diagram.png" alt="PCA Diagram" width="800">
+</div>
 
 ### Novelty 3: Signal Detection Theory (SDT) for B9/B10
 
@@ -309,20 +285,13 @@ A 모델과 B 모델이 **독립적이지만 상호 정보를 교환**합니다:
 
 5-Fold CV 내에서 **학습 데이터를 절반씩 분할하여 교차 매핑**함으로써, 과거 이력 정보의 예측력을 활용하면서도 라벨 누수를 완전 차단합니다:
 
-```
-Train Fold → split → Half_1   Half_2
-                      │          │
-                      ▼          ▼
-              hist_2로 매핑  hist_1로 매핑
-                      │          │
-                      └────┬─────┘
-                           ▼
-                    Merged Train Data (No Leakage)
-```
+<div align="center">
+<img src="assets/cross_label_diagram.png" alt="Cross Label History" width="800">
+</div>
 
 ---
 
-## Key Findings from Data Analysis
+## 📊 Key Findings from Data Analysis
 
 ### 학습 효과: 과거 검사 경험이 연령 효과를 상쇄
 
@@ -354,7 +323,7 @@ Train Fold → split → Half_1   Half_2
 
 ---
 
-## Explainability: 4-Panel Visualization
+## 🔍 Explainability: 4-Panel Visualization
 
 | Panel | Description |
 |:-----:|-------------|
@@ -367,10 +336,10 @@ Train Fold → split → Half_1   Half_2
 
 ---
 
-## Tech Stack
+## 🧰 Tech Stack
 
 | Category | Tool | Version | Role |
-|----------|------|---------|------|
+|:--------:|:-----|:-------:|:-----|
 | **GBDT** | XGBoost | 2.1.1 | Model A (5-Fold CV) |
 | **GBDT** | CatBoost | 1.2.3 | Model B (Native Categorical) |
 | **ML** | scikit-learn | 1.7.2 | PCA, StandardScaler, KFold, Metrics |
@@ -383,7 +352,7 @@ Train Fold → split → Half_1   Half_2
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ```bash
 # 1. Setup
@@ -398,14 +367,20 @@ python scripts/train_model_b.py
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 .
 ├── assets/                          # README 이미지
 │   ├── leaderboard.png
 │   ├── cover.png
-│   └── award_certificate.jpg
+│   ├── award_certificate.jpg
+│   ├── architecture_diagram.png     # 아키텍처 다이어그램
+│   ├── feature_importance.png       # 피처 중요도 시각화
+│   ├── model_comparison.png         # 모델 비교 차트
+│   ├── pca_diagram.png              # PCA 다이어그램
+│   ├── cross_label_diagram.png      # Cross-Label 다이어그램
+│   └── technical_report/            # 테크니컬 리포트 이미지
 │
 ├── scripts/                         # 실행 스크립트
 │   ├── train_model_a.py             #   Model A (XGBoost, 5-Fold CV)
@@ -435,7 +410,7 @@ python scripts/train_model_b.py
 
 ---
 
-## References
+## 📚 References
 
 1. T. Chen & C. Guestrin. *XGBoost: A Scalable Tree Boosting System.* KDD, 2016.
 2. A. V. Dorogush et al. *CatBoost: Gradient Boosting with Categorical Features Support.* NeurIPS, 2018.
@@ -444,3 +419,57 @@ python scripts/train_model_b.py
 5. S. M. Lundberg & S. I. Lee. *A Unified Approach to Interpreting Model Predictions (SHAP).* NeurIPS, 2017.
 6. Dacon. 운수종사자 인지적 특성 데이터를 활용한 교통사고 위험 예측 AI 경진대회. https://dacon.io/competitions/official/236564
 
+---
+
+## 📄 Technical Report
+
+<details>
+<summary><b>📖 Click to view Technical Report (6 pages)</b></summary>
+
+<br>
+
+<div align="center">
+
+### Page 1
+<img src="assets/technical_report/page_01.png" alt="Technical Report Page 1" width="100%">
+
+---
+
+### Page 2
+<img src="assets/technical_report/page_02.png" alt="Technical Report Page 2" width="100%">
+
+---
+
+### Page 3
+<img src="assets/technical_report/page_03.png" alt="Technical Report Page 3" width="100%">
+
+---
+
+### Page 4
+<img src="assets/technical_report/page_04.png" alt="Technical Report Page 4" width="100%">
+
+---
+
+### Page 5
+<img src="assets/technical_report/page_05.png" alt="Technical Report Page 5" width="100%">
+
+---
+
+### Page 6
+<img src="assets/technical_report/page_06.png" alt="Technical Report Page 6" width="100%">
+
+</div>
+
+</details>
+
+---
+
+<div align="center">
+
+### 🏆 Made with dedication by Team Lucky Pelican 🏆
+
+**김진욱 · 송용호 · 이유진 · 심재현**
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jinnwoook)
+
+</div>
